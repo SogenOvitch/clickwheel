@@ -33,7 +33,7 @@ namespace Clickwheel
                 Path.GetTempPath(),
                 "Clickwheel",
                 "Sessions",
-                _iPod.DeviceInfo.SerialNumber
+                _iPod.DeviceInfo.SerialNumber ?? "IPod_Sogen"
             );
 
         public void Clear()

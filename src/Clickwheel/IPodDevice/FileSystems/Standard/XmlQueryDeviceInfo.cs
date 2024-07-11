@@ -41,7 +41,9 @@ namespace Clickwheel.IPodDevice.FileSystems
             }
             else
             {
-                throw new ExtendedSysInfoNotFoundException();
+                Trace.WriteLine("No DeviceXml");
+                return;
+                //throw new ExtendedSysInfoNotFoundException();
             }
 
             if (RawDeviceDescriptor.Length == 0)

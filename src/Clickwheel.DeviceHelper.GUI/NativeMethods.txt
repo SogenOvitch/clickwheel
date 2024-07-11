@@ -1,5 +1,0 @@
-DwmSetWindowAttribute
-SHGetStockIconInfo
-DestroyIcon
-SHSTOCKICONINFO
-SHGSI_FLAGS
