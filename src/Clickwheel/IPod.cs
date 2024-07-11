@@ -278,6 +278,11 @@ namespace Clickwheel
             throw new IPodNotFoundException("No iPod could be found on your computer");
         }
 
+        public bool IsConnected()
+        {
+            return _fileSystem?.GetDevice() != null;
+        }
+
         /// <summary>
         /// Returns all connected iPods. This is slower than GetConnectediPod as it must enumerate all drives, so only use if you know you need to
         /// handle multiple iPods at once.
