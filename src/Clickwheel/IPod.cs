@@ -275,7 +275,8 @@ namespace Clickwheel
                     return new IPod(connectedFS, action);
                 }
             }
-            throw new IPodNotFoundException("No iPod could be found on your computer");
+            return null;
+            //throw new IPodNotFoundException("No iPod could be found on your computer");
         }
 
         public bool IsConnected()
