@@ -69,6 +69,10 @@ namespace Clickwheel.Parsers.iTunesDB
 
         #endregion
 
+        public List<Playlist> FindAll(Predicate<Playlist> match)
+        {
+            return _childSections.FindAll(match);
+        }
 
         internal void ResolveTracks()
         {
