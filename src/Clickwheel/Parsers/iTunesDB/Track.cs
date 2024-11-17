@@ -47,6 +47,8 @@ namespace Clickwheel.Parsers.iTunesDB
         private uint _bitrate;
         private uint _sampleRate;
         private int _volumeAdjustment;
+        private IPodTrackLength _trackStartTime;
+        private IPodTrackLength _trackStopTime;
         private byte[] _unk1;
         private int _playCount;
         private int _playCount2;
@@ -94,6 +96,8 @@ namespace Clickwheel.Parsers.iTunesDB
             _dateLastModified = new IPodDateTime(DateTime.Now);
             _fileSize = new IPodTrackSize(0);
             _trackLength = new IPodTrackLength(0);
+            _trackStartTime = new IPodTrackLength(0);
+            _trackStopTime = new IPodTrackLength(0);
             _dateLastPlayed = new IPodDateTime(0);
             _dateAdded = new IPodDateTime(DateTime.Now);
             _childSections = new List<BaseMHODElement>();
@@ -128,7 +132,9 @@ namespace Clickwheel.Parsers.iTunesDB
             _bitrate = reader.ReadUInt32();
             _sampleRate = reader.ReadUInt32();
             _volumeAdjustment = reader.ReadInt32();
-            _unk1 = reader.ReadBytes(12);
+            _trackStartTime = new IPodTrackLength(reader.ReadUInt32());
+            _trackStopTime = new IPodTrackLength(reader.ReadUInt32());
+            _unk1 = reader.ReadBytes(4);
             _playCount = reader.ReadInt32();
             _playCount2 = reader.ReadInt32();
             _dateLastPlayed = new IPodDateTime(reader.ReadUInt32());
@@ -199,6 +205,8 @@ namespace Clickwheel.Parsers.iTunesDB
             writer.Write(_bitrate);
             writer.Write(_sampleRate);
             writer.Write(_volumeAdjustment);
+            writer.Write(_trackStartTime.MilliSeconds);
+            writer.Write(_trackStopTime.MilliSeconds);
             writer.Write(_unk1);
             writer.Write(_playCount);
             writer.Write(_playCount2);
@@ -486,6 +494,10 @@ namespace Clickwheel.Parsers.iTunesDB
         public IPodTrackSize FileSize => _fileSize;
 
         public IPodTrackLength Length => _trackLength;
+
+        public IPodTrackLength StartTime => _trackStartTime;
+
+        public IPodTrackLength StopTime => _trackStopTime;
 
         public uint TrackNumber
         {
@@ -846,7 +858,7 @@ namespace Clickwheel.Parsers.iTunesDB
             }
             _iPod.FileSystem.CreateDirectory(Path.GetDirectoryName(iPodFileName));
 
-            _unk1 = new byte[12];
+            _unk1 = new byte[4];
             _unk3 = new byte[38];
             _unk4 = new byte[30];
             _unk5 = new byte[44];
